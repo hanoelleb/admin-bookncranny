@@ -1,17 +1,20 @@
 package com.bookstore.adminportal.models;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.web.multipart.MultipartFile;
 
+@Entity
 public class Book {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="book_id", nullable=false, updatable=false)
 	private Long id;
 	private String title;
 	private String author;
@@ -31,6 +34,7 @@ public class Book {
 	private String description;
 	private int inStockNumber;
 	
+	@Transient
 	private MultipartFile bookImage;
 
 	public Long getId() {
@@ -161,7 +165,6 @@ public class Book {
 		this.inStockNumber = inStockNumber;
 	}
 
-	@Transient
 	public MultipartFile getBookImage() {
 		return bookImage;
 	}
