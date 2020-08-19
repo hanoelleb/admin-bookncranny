@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header" />
+<div th:replace="common/header :: navbar"></div>
+
+<div class="container">
+	<form class="form-horizontal" method="POST" th:action="@{/books/add}"
+		enctype="multipart/form-data">
+		<fieldset>
+			<legend class="center-block">Creating new book</legend>
+			<span style="font-size: small"> * is a required field </span>
+
+			<div class="form-group">
+				<label for="title">Title</label> <input type="text" name="title"
+					class="form-control" id="title" placeholder="Title" required>
+			</div>
+
+			<div class="form-group">
+				<label for="author">Author</label> <input type="text" name="author"
+					class="form-control" id="author" placeholder="Author" required>
+			</div>
+
+			<div class="form-group">
+				<label for="publisher">Publisher</label> <input type="text"
+					name="publisher" class="form-control" id="publisher"
+					placeholder="Publisher" required>
+			</div>
+
+			<div class="form-group">
+				<label for="publishDate">Publication Date</label> <input type="date"
+					name="publicationDate" class="form-control" id="publishDate">
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-2" for="lang">Language</label>
+				<div class="col-xs-8">
+					<select th:value="${book.language}" id="lang" class="form-control"
+						name="language">
+						<option value="english">English</option>
+						<option value="spanish">Spanish</option>
+						<option value="french">French</option>
+						<option value="japanese">Japanese</option>
+						<option value="korean">Korean</option>
+						<option value="arabic">Arabic</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-2" for="cat">Category</label>
+				<div class="col-xs-8">
+					<select th:value="${book.category}" id="cat" class="form-control"
+						name="category">
+						<option value="non-fiction"
+							th:selected="(${book.category} == 'non-fiction')">Non-fiction</option>
+						<option value="literature"
+							th:selected="(${book.category} == 'literature')">Literature</option>
+						<option value="mystery"
+							th:selected="(${book.category} == 'mystery')">Mystery</option>
+						<option value="science fiction"
+							th:selected="(${book.category} == 'science fiction')">Science
+							Fiction</option>
+						<option value="romance"
+							th:selected="(${book.category} == 'romance')">Romance</option>
+						<option value="programming"
+							th:selected="(${book.category} == 'programming')">Programming</option>
+						<option value="art" th:selected="(${book.category} == 'art')">Art</option>
+						<option value="business"
+							th:selected="(${book.category} == 'business')">Business</option>
+						<option value="children"
+							th:selected="(${book.category} == 'children')">Children</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="pages">Number of Pages</label> <input type="number"
+					th:value="${book.numberOfPages}" name="numberOfPages"
+					class="form-control" placeholder="Page number" id="pages">
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-2" for="format">Format</label>
+				<div class="col-xs-8">
+					<select th:value="${book.format}" id="lang" class="form-control"
+						name="format">
+						<option value="paperback">paperback</option>
+						<option value="hardcover">hardcover</option>
+						<option value="graphic novel">graphic novel</option>
+						<option value="comic">comic</option>
+						<option value="audio book">audio book</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="isbn">ISBN</label> <input type="text"
+					th:value="${book.isbn}" name="isbn" class="form-control"
+					placeholder="ISBN" id="isbn">
+			</div>
+
+			<div class="form-group">
+				<label for="weight">Shipping Weight</label> <input type="number"
+					th:value="${book.shippingWeight}" name="shippingWeight"
+					class="form-control" placeholder="Weight (in ounces)" id="weight">
+			</div>
+
+			<div class="form-group">
+				<label for="listprice">List Price</label> <input type="number"
+					th:value="${book.listPrice}" name="listPrice" class="form-control"
+					placeholder="Listed price" id="listprice">
+			</div>
+
+			<div class="form-group">
+				<label for="ourprice">Our Price</label> <input type="number"
+					th:value="${book.ourPrice}" name="ourPrice" class="form-control"
+					placeholder="Our price" id="ourprice">
+			</div>
+
+			<div class="form-group">
+				<label for="desc">Description</label>
+				<textarea id="desc" name="description" rows="5" cols="180"
+					placeholder="Description/summary of book"
+					th:value="${book.description}"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="stock">Stock</label> <input type="number"
+					th:value="${book.inStockNumber}" name="stock" class="form-control"
+					placeholder="Number of in-stock copies" id="stock">
+			</div>
+
+			<div class="form-group">
+				<label for="status">Status</label> <label> <input
+					type="radio" value="true" name="status">Active
+				</label> <label> <input type="radio" value="false" name="status">Inactive
+				</label>
+			</div>
+			
+			<div class="form-group">
+				<label for="bookImage">Upload book Image</label>
+				<input type="file" id="bookImage" name="bookImage" th:value="${book.bookImage}">
+			</div>
+
+			<button type="submit" class="btn btn-success">Create</button>
+			<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+		</fieldset>
+	</form>
+</div>
+<!-- end of container -->
+</body>
+</html>
