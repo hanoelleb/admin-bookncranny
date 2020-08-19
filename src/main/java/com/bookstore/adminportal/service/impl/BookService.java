@@ -1,6 +1,7 @@
 package com.bookstore.adminportal.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,5 +22,10 @@ public class BookService implements IBookService {
 
 	public List<Book> findAll() {
 		return (List<Book>) bookRepository.findAll();
+	}
+
+	@Override
+	public Optional<Book> findOne(Long id) {
+		return bookRepository.findById(id);
 	}
 }

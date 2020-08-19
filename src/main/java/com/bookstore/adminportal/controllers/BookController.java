@@ -3,7 +3,10 @@ package com.bookstore.adminportal.controllers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstore.adminportal.models.Book;
@@ -58,5 +62,78 @@ public class BookController {
 		List<Book> bookList = bookService.findAll();
 		model.addAttribute("bookList", bookList);
 		return "book-list";
+	}
+	
+	@RequestMapping("/book-info")
+	public String bookInfo(@RequestParam("id") Long id, Model model) {
+		
+		Optional<Book> find = bookService.findOne(id);
+		
+		if (find.isPresent()) {
+			Book book = find.get();
+			model.addAttribute("book", book);
+		} else {
+			model.addAttribute("empty", true);
+		}
+		return "book-info";
+	}
+	
+	@RequestMapping("/edit")
+	public String editBook(@RequestParam("id") Long id, Model model) {
+		
+	Optional<Book> find = bookService.findOne(id);
+		
+		if (find.isPresent()) {
+			Book book = find.get();
+			model.addAttribute("book", book);
+		} else {
+			model.addAttribute("empty", true);
+		}
+		
+		return "update-book";
+	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.POST)
+	public String updateBook(@ModelAttribute("book") Book book, HttpServletRequest request) {
+		
+		Optional<Book> find = bookService.findOne(book.getId());
+		
+		Book old = find.get();
+		old.setTitle(book.getTitle());
+		old.setActive(book.getActive());
+		old.setAuthor(book.getAuthor());
+		old.setCategory(book.getCategory());
+		old.setDescription(book.getDescription());
+		old.setFormat(book.getFormat());
+		old.setInStockNumber(book.getInStockNumber());
+		old.setIsbn(book.getIsbn());
+		old.setListPrice(book.getListPrice());
+		old.setOurPrice(book.getOurPrice());
+		old.setNumberOfPages(book.getNumberOfPages());
+		old.setPublicationDate(book.getPublicationDate());
+		old.setPublisher(book.getPublisher());
+		old.setShippingWeight(book.getShippingWeight());
+		
+		bookService.save(old);
+		
+		MultipartFile bookImage = book.getBookImage();
+		
+		if (!bookImage.isEmpty()) {
+			try {
+				byte[] bytes = bookImage.getBytes();
+				String name = book.getId() + ".png";
+				
+				Files.delete(Paths.get("src/main/resources/static/images/books/"+name));
+				
+				FileOutputStream fos = new FileOutputStream(new File("src/main/resources/static/images/books/"+name));
+				BufferedOutputStream stream = new BufferedOutputStream(fos);
+				stream.write(bytes);
+				stream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "redirect:/books/book-info?id="+book.getId();
 	}
 }

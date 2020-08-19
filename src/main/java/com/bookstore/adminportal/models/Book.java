@@ -141,7 +141,7 @@ public class Book {
 		this.ourPrice = ourPrice;
 	}
 
-	public boolean isActive() {
+	public boolean getActive() {
 		return active;
 	}
 
