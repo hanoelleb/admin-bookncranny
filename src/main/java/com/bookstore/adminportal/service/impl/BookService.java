@@ -1,6 +1,9 @@
 package com.bookstore.adminportal.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.bookstore.adminportal.models.Book;
@@ -14,5 +17,9 @@ public class BookService implements IBookService {
 	
 	public Book save(Book book) {
 		return bookRepository.save(book);
+	}
+
+	public List<Book> findAll() {
+		return (List<Book>) bookRepository.findAll();
 	}
 }
