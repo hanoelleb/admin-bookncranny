@@ -30,7 +30,7 @@
 					<p><strong>Language: </strong><span th:text="${book.language}"></span></p>	
 					<p><strong>Category: </strong><span th:text="${book.category}"></span></p>	
 					<p><strong>Pages: </strong><span th:text="${book.numberOfPages}"></span></p>	
-					<p><strong>Description: </strong><span th:text="${book.description}"></span></p>
+					<p><strong>Description: </strong><span th:utext="${book.description}"></span></p>
 				</div>
 				<div class="col-xs-3">
 					<p><strong>Format: </strong><span th:text="${book.format}"></span></p>

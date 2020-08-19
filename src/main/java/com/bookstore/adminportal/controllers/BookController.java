@@ -95,26 +95,7 @@ public class BookController {
 	
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
 	public String updateBook(@ModelAttribute("book") Book book, HttpServletRequest request) {
-		
-		Optional<Book> find = bookService.findOne(book.getId());
-		
-		Book old = find.get();
-		old.setTitle(book.getTitle());
-		old.setActive(book.getActive());
-		old.setAuthor(book.getAuthor());
-		old.setCategory(book.getCategory());
-		old.setDescription(book.getDescription());
-		old.setFormat(book.getFormat());
-		old.setInStockNumber(book.getInStockNumber());
-		old.setIsbn(book.getIsbn());
-		old.setListPrice(book.getListPrice());
-		old.setOurPrice(book.getOurPrice());
-		old.setNumberOfPages(book.getNumberOfPages());
-		old.setPublicationDate(book.getPublicationDate());
-		old.setPublisher(book.getPublisher());
-		old.setShippingWeight(book.getShippingWeight());
-		
-		bookService.save(old);
+		bookService.save(book);
 		
 		MultipartFile bookImage = book.getBookImage();
 		
