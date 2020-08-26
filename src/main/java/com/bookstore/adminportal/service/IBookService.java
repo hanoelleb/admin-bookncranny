@@ -11,4 +11,6 @@ public interface IBookService {
 	List<Book> findAll();
 	
 	Optional<Book> findOne(Long id);
+	
+	void delete(Book book);
 }

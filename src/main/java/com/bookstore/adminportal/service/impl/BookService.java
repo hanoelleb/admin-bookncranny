@@ -28,4 +28,9 @@ public class BookService implements IBookService {
 	public Optional<Book> findOne(Long id) {
 		return bookRepository.findById(id);
 	}
+
+	@Override
+	public void delete(Book book) {
+		bookRepository.delete(book);
+	}
 }

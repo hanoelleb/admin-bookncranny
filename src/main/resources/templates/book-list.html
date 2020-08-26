@@ -27,7 +27,10 @@
 					<td th:text="${book.listPrice}"></td>
 					<td th:text="${book.ourPrice}"></td>
 					<td th:text="${book.active}"></td>
-					<td>Delete</td>
+					<td>
+						<input type='hidden' name='id' th:value="${book.id}"></input>
+						<a th:href="@{/books/remove(id=${book.id})}">Delete</a>
+					</td>
 				</tr>
 			</tbody>
 			<tfoot>

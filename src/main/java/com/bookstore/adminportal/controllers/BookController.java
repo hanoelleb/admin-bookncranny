@@ -117,4 +117,14 @@ public class BookController {
 		
 		return "redirect:/books/book-info?id="+book.getId();
 	}
+	
+	@RequestMapping(value="/remove")
+	public String removeBook(@RequestParam("id") Long id, Model model) {
+		
+		bookService.delete(bookService.findOne(id).get());
+		
+		List<Book> bookList = bookService.findAll();
+		model.addAttribute("bookList", bookList);
+		return "book-list";
+	}
 }
