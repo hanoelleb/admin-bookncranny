@@ -2,6 +2,7 @@ package com.bookstore.adminportal.models;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,11 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.bookstore.adminportal.security.UserRole;
+
 import com.bookstore.adminportal.security.Authority;
+import com.bookstore.adminportal.security.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -36,6 +39,19 @@ public class User implements UserDetails {
 	String firstName;
 	String lastName;
 	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="user")
+	private ShoppingCart shoppingCart;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private List<UserShipping> userShippingList;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private List<UserPayment> userPaymentList;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<UserRole> userRoles = new HashSet<>();
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -49,10 +65,6 @@ public class User implements UserDetails {
 		this.lastName = lastName;
 	}
 	boolean enabled = true;
-	
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JsonIgnore
-	private Set<UserRole> userRoles = new HashSet<>();
 	
 	public long getId() {
 		return id;
@@ -91,6 +103,24 @@ public class User implements UserDetails {
 		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
 		return null;
 	}
+	
+	
+	
+	public List<UserShipping> getUserShippingList() {
+		return userShippingList;
+	}
+	public void setUserShippingList(List<UserShipping> userShippingList) {
+		this.userShippingList = userShippingList;
+	}
+	public List<UserPayment> getUserPaymentList() {
+		return userPaymentList;
+	}
+	public void setUserPaymentList(List<UserPayment> userPaymentList) {
+		this.userPaymentList = userPaymentList;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -110,5 +140,10 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 }
