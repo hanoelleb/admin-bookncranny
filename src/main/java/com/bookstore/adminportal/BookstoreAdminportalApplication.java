@@ -15,7 +15,7 @@ import com.bookstore.adminportal.service.impl.UserService;
 import com.bookstore.adminportal.utility.SecurityUtility;
 
 @SpringBootApplication
-public class BookstoreAdminportalApplication implements CommandLineRunner {
+public class BookstoreAdminportalApplication {
 
 	@Autowired
 	private UserService userService;
@@ -23,7 +23,7 @@ public class BookstoreAdminportalApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreAdminportalApplication.class, args);
 	}
-	
+	/*
 	@Override
 	public void run(String... args) throws Exception {
 		User demo = new User();
@@ -41,4 +41,5 @@ public class BookstoreAdminportalApplication implements CommandLineRunner {
 		
 		userService.createUser(demo,  userRoles);	
 	}
+	*/
 }
